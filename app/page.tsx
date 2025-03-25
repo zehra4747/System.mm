@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import jsPDF from 'jspdf';
 import Image from 'next/image';
 
@@ -21,13 +21,23 @@ export default function Home() {
     const today = new Date().toLocaleDateString('en-GB');
     const [isCustomDiscount, setIsCustomDiscount] = useState(false);
 
+    const calculateGrandTotal = useCallback(() => {
+        const total = totals.reduce((acc, curr) => acc + curr, 0);
+        setGrandTotal(total);
+    }, [totals]);
+
+    const calculateFinalTotal = useCallback(() => {
+        const discountAmount = (grandTotal * discount) / 100;
+        setFinalTotal(grandTotal - discountAmount);
+    }, [grandTotal, discount]);
+
     useEffect(() => {
         calculateGrandTotal();
-    }, [totals]);
+    }, [calculateGrandTotal, totals]);
 
     useEffect(() => {
         calculateFinalTotal();
-    }, [grandTotal, discount]);
+    }, [calculateFinalTotal, grandTotal, discount]);
 
     const handleQuantityChange = (index: number, value: number) => {
         const updatedQuantities = [...quantities];
@@ -39,12 +49,7 @@ export default function Home() {
         setTotals(updatedTotals);
     };
 
-    const calculateGrandTotal = () => {
-        const total = totals.reduce((acc, curr) => acc + curr, 0);
-        setGrandTotal(total);
-    };
-
-    const handleDiscountChange = (e: { target: { value: any; }; }) => {
+    const handleDiscountChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         if (e.target.value === "custom") {
             setIsCustomDiscount(true);
             setDiscount(0);
@@ -54,13 +59,8 @@ export default function Home() {
         }
     };
 
-    const handleCustomDiscountInput = (e: { target: { value: any; }; }) => {
+    const handleCustomDiscountInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         setDiscount(Number(e.target.value));
-    };
-
-    const calculateFinalTotal = () => {
-        const discountAmount = (grandTotal * discount) / 100;
-        setFinalTotal(grandTotal - discountAmount);
     };
 
     const generatePDF = () => {
