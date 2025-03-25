@@ -6,6 +6,8 @@ import Image from 'next/image';
 const initialProducts = [
     { name: 'On On', price: 270 },
     { name: 'Crazy Egg', price: 815 },
+    { name: 'Jimsim10', price: 263 },
+    { name: 'Candle jelly', price: 310 },
     { name: 'Cotton Candy', price: 207 }
 ];
 
