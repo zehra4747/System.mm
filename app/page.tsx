@@ -7,6 +7,12 @@ const initialProducts = [
     { name: 'On On', price: 270 },
     { name: 'Crazy Egg', price: 815 },
     { name: 'Jimsim10', price: 263 },
+    { name: 'Cola10', price: 263 },
+    { name: 'OrangeSlice', price: 420 },
+    { name: 'TooToo', price: 270 },
+    { name: 'Trexo', price: 423 },
+    { name: 'Rockeys', price: 157 },
+    { name: 'Tiny Egg', price: 275 },
     { name: 'Candle jelly', price: 310 },
     { name: 'Cotton Candy', price: 207 }
 ];
